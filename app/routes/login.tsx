@@ -1,5 +1,5 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
-import { Form, useActionData } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { Input } from "@/components/input";
 import { createUserSession } from "@/session.server";
@@ -22,15 +22,11 @@ export const action = async ({ request }: ActionArgs) => {
       return json({ error: "Invalid credentials" }, { status: 401 });
     }
   } catch (error) {
-    console.log(error);
     return json({ error: "Invalid credentials" }, { status: 401 });
   }
 };
 
 export default function Login() {
-  const data = useActionData();
-
-  console.info("USER CREDENTIALS EXPECTED", data);
   return (
     <Form method={"post"}>
       <Input label={"Email"} name={"email"} type={"email"} />
