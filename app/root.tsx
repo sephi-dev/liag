@@ -45,7 +45,7 @@ export default function App() {
   return (
     <html lang={locale} dir={i18n.dir()}>
       <head>
-        <title>sephi.code</title>
+        <title>Liag - Life is a game</title>
         <Meta />
         <Links />
       </head>
