@@ -16,10 +16,10 @@ export const action = async ({ request }: ActionArgs) => {
       body: JSON.stringify({ ...formData }),
     });
     const data = await req.json();
-    if (data) {
-      return createUserSession({ request, data });
-    } else {
+    if (data.errors) {
       return json({ error: "Invalid credentials" }, { status: 401 });
+    } else {
+      return createUserSession({ request, data });
     }
   } catch (error) {
     return json({ error: "Invalid credentials" }, { status: 401 });
@@ -31,7 +31,6 @@ export default function Login() {
     <Form method={"post"}>
       <Input label={"Email"} name={"email"} type={"email"} />
       <Input label={"Password"} name={"password"} type={"password"} />
-
       <button type={"submit"}>Connexion</button>
     </Form>
   );
