@@ -12,14 +12,27 @@ import { useTranslation } from "react-i18next";
 import i18next from "@/i18next.server";
 import { json } from "@remix-run/node";
 import { useEffect } from "react";
+import { isAfter } from "date-fns";
 
 import styles from "@/glossy/app.css";
+import { getUserSession, logout } from "@/session.server";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export const loader = async ({ request }: LoaderArgs) => {
   const locale = await i18next.getLocale(request);
-  return json({ locale });
+  const userSession = await getUserSession(request);
+  let isExpired;
+
+  if (userSession) {
+    console.info("userSession", "exist");
+    const expires = new Date(userSession.exp * 1000);
+    const now = new Date();
+    isExpired = isAfter(now, expires);
+    if (isExpired) return await logout(request);
+  }
+
+  return json({ locale, userSession, isExpired });
 };
 
 export const handle = {
