@@ -14,7 +14,7 @@ import { json } from "@remix-run/node";
 import { useEffect } from "react";
 import { isAfter } from "date-fns";
 
-import styles from "@/glossy/app.css";
+import styles from "@/glossy/global.css";
 import { getUserSession, logout } from "@/session.server";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];

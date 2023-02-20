@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useMatches } from "@remix-run/react";
+import { Form, Link, useLoaderData, useMatches } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/node";
 import { getUserSession, logout } from "@/session.server";
 import { isAfter } from "date-fns";
@@ -28,6 +28,7 @@ export const loader = async ({ request }: LoaderArgs) => {
       return json({ error: "Invalid credentials" }, { status: 401 });
     }
   }
+  return json({ userSession });
 };
 
 export default function Index() {
@@ -43,7 +44,10 @@ export default function Index() {
     <div>
       {userSession ? (
         <div>
-          Hello {userSession.user.firstName}! <Link to={"/logout"}>Logout</Link>
+          Hello {userSession.user.firstName}!
+          <Form action="/logout" method="post">
+            <button type="submit">Logout</button>
+          </Form>
           {error && <div>{error}</div>}
           {quests && (
             <div>
