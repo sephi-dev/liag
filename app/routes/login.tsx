@@ -1,7 +1,7 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { Form } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { Input } from "@/components/input";
+import { FormField } from "@/components/molecules/form-field";
 import { createUserSession } from "@/session.server";
 
 export const action = async ({ request }: ActionArgs) => {
@@ -28,10 +28,10 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function Login() {
   return (
-    <Form method={"post"}>
-      <Input label={"Email"} name={"email"} type={"email"} />
-      <Input label={"Password"} name={"password"} type={"password"} />
-      <button type={"submit"}>Connexion</button>
+    <Form method="post" className="flex flex-col gap-4">
+      <FormField label="Email" name="email" type="email" />
+      <FormField label="Password" name="password" type="password" />
+      <button type="submit">Connexion</button>
     </Form>
   );
 }

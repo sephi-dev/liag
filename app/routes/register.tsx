@@ -1,6 +1,6 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { Form } from "@remix-run/react";
-import { Input } from "@/components/input";
+import { FormField } from "@/components/molecules/form-field";
 import { redirect } from "@remix-run/server-runtime";
 
 export const action = async ({ request }: ActionArgs) => {
@@ -22,15 +22,24 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function Register() {
   return (
-    <>
-      <Form method={"post"}>
-        <Input label={"Email"} name={"email"} type={"email"} />
-        <Input label={"Password"} name={"password"} type={"password"} />
-        <Input label={"First name"} name={"firstName"} />
-        <Input label={"Last name"} name={"lastName"} />
-
-        <button type={"submit"}>Soumettre</button>
-      </Form>
-    </>
+    <section className="flex h-screen">
+      <div className="w-1/2 bg-[#121212]"></div>
+      <div className=" w-1/2 bg-[#171717]">
+        <Form
+          method={"post"}
+          className="mx-auto flex w-[360px] flex-col gap-8 pt-60">
+          <div className="flex flex-row gap-6">
+            <FormField placeholder="John" className="w-[168px]" label={"First name"} name={"firstName"} />
+            <FormField placeholder="Do" className="w-[168px]" label={"Last name"} name={"lastName"} />
+          </div>
+          <FormField placeholder="adress@mail.com" label={"Email"} name={"email"} type={"email"} />
+          <FormField placeholder="**********" label={"Password"} name={"password"} type={"password"} />
+          <button
+            className=" text-14 h-10 rounded bg-[#7369F1] font-semibold text-slate-50 hover:bg-[#554dc8]"
+            type={"submit"}> Create account
+          </button>
+        </Form>
+      </div>
+    </section>
   );
 }

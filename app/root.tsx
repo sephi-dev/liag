@@ -62,8 +62,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className={"bg-zinc-800 text-light"}>
-        <div className={"mx-auto w-full px-4 py-20 md:w-[740px]"}>
+      <body className="bg-[#121212] text-slate-50 ">
+        <div>
           <Outlet />
         </div>
         <ScrollRestoration />
