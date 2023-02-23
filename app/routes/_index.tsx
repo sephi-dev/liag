@@ -31,7 +31,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json({ userSession });
 };
 
-export default function Index() {
+export default function _index() {
   const matches = useMatches();
   // data coming from the root loader function
   const data = matches.find(match => match.id === "root");

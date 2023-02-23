@@ -1,11 +1,11 @@
-export const content = [
-  "./app/routes/**/*.{js,ts,jsx,tsx}",
-  "./app/components/**/*.{js,ts,jsx,tsx}",
-  "./app/kommons/**/*.{js,ts,jsx,tsx}",
-  "./app/layouts/**/*.{js,ts,jsx,tsx}",
-  "./app/root.{js,ts,jsx,tsx}",
-];
-export const theme = {
+module.exports = {
+  content: [
+    "./app/routes/**/*.{js,ts,jsx,tsx}",
+    "./app/components/**/*.{js,ts,jsx,tsx}",
+    "./app/kommons/**/*.{js,ts,jsx,tsx}",
+    "./app/layouts/**/*.{js,ts,jsx,tsx}",
+    "./app/root.{js,ts,jsx,tsx}",
+  ],
   fontFamily: {
     title: "Lora",
     body: "Inter",
@@ -31,5 +31,5 @@ export const theme = {
       "dark-bg": "#171717",
     },
   },
+  plugins: [],
 };
-export const plugins = [];
