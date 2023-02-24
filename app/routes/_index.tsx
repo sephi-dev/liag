@@ -52,7 +52,9 @@ export default function _index() {
           {quests && (
             <div>
               {quests.docs.map(quest => (
-                <div key={quest.id}>{quest.title}</div>
+                <div key={quest.id}>
+                  <Link to={`/quests/${quest.id}`}>{quest.title}</Link>
+                </div>
               ))}
             </div>
           )}

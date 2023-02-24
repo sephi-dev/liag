@@ -30,7 +30,7 @@ export const Input = ({
       ref={ref}
       name={name}
       id={name}
-      className="text-slate-50 text-14 w-fill h-10 rounded border border-[#363636] bg-[#1E1E1E] p-2.5 text-slate-50 focus:border-0"
+      className="text-14 w-fill h-10 rounded border border-[#363636] bg-[#1E1E1E] p-2.5 text-slate-50 placeholder:text-[#9F9F9F] focus:border-0"
       placeholder={placeholder}
       onChange={e => onChange?.(e.target.value)}
       value={value}
