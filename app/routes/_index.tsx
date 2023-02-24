@@ -6,14 +6,13 @@ import { json } from "@remix-run/node";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const userSession = await getUserSession(request);
-  let quests;
 
   if (userSession) {
     const expires = new Date(userSession.exp * 1000);
     const now = new Date();
     const isExpired = isAfter(now, expires);
     if (isExpired) return await logout(request);
-
+    console.info("userSession", userSession);
     try {
       const req = await fetch("http://localhost:3000/api/quests", {
         method: "GET",
@@ -38,13 +37,11 @@ export default function _index() {
   const { userSession } = data?.data || {};
   const { quests, error } = useLoaderData();
 
-  console.info("quests", quests);
-
   return (
     <div>
       {userSession ? (
         <div>
-          Hello {userSession.user.firstName}!
+          Hello {userSession.user?.firstName}!
           <Form action="/logout" method="post">
             <button type="submit">Logout</button>
           </Form>
