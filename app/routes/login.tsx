@@ -1,7 +1,7 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { Link, Form } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { FormField } from "@/components/molecules/form-field";
+import { InputField } from "@/components/molecules/input-field";
 import { createUserSession } from "@/session.server";
 import { CustomCheckbox } from "@/components/atoms/checkbox";
 
@@ -35,13 +35,13 @@ export default function Login() {
           LIAG
         </h1>
         <Form method={"post"} className="mx-auto flex w-[360px] flex-col gap-8">
-          <FormField
+          <InputField
             placeholder="adress@mail.com"
             label={"Email"}
             name={"email"}
             type={"email"}
           />
-          <FormField
+          <InputField
             placeholder="**********"
             label={"Password"}
             name={"password"}

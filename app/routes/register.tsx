@@ -1,6 +1,6 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { Link, Form } from "@remix-run/react";
-import { FormField } from "@/components/molecules/form-field";
+import { InputField } from "@/components/molecules/input-field";
 import { redirect } from "@remix-run/server-runtime";
 import { CustomCheckbox } from "@/components/atoms/checkbox";
 
@@ -37,26 +37,26 @@ export default function Register() {
         </h1>
         <Form method={"post"} className="mx-auto flex w-[360px] flex-col gap-8">
           <div className="flex flex-row gap-6">
-            <FormField
+            <InputField
               placeholder="John"
               className="w-[168px]"
               label={"First name"}
               name={"firstName"}
             />
-            <FormField
+            <InputField
               placeholder="Do"
               className="w-[168px]"
               label={"Last name"}
               name={"lastName"}
             />
           </div>
-          <FormField
+          <InputField
             placeholder="adress@mail.com"
             label={"Email"}
             name={"email"}
             type={"email"}
           />
-          <FormField
+          <InputField
             placeholder="**********"
             label={"Password"}
             name={"password"}

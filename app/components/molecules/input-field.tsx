@@ -9,7 +9,7 @@ interface Props {
   placeholder: string;
 }
 
-export const FormField = ({
+export const InputField = ({
   type,
   label,
   name,
@@ -19,7 +19,7 @@ export const FormField = ({
   return (
     <div className={`flex max-w-[360px] flex-col gap-2 ${className}`}>
       <Label label={label} htmlFor={name} />
-      <Input placeholder={placeholder} type={type} label={label} name={name} />
+      <Input placeholder={placeholder} type={type} name={name} />
     </div>
   );
 };
