@@ -31,5 +31,8 @@ module.exports = {
       "dark-bg": "#171717",
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-radix")(),
+    require("tailwindcss-font-inter"),
+  ],
 };
