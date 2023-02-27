@@ -8,6 +8,7 @@ interface Props {
   type?: string;
   placeholder: string;
   unit?: string;
+  onChange?: (value: string) => void;
 }
 
 export const PrimaryInputField = ({
@@ -37,10 +38,16 @@ export const SecondaryInputField = ({
   name,
   className,
   placeholder,
+  onChange,
 }: Props) => {
   return (
     <div className={`flex max-w-[360px] flex-col gap-2 ${className}`}>
-      <SecondaryInput placeholder={placeholder} type={type} name={name} />
+      <SecondaryInput
+        onChange={onChange}
+        placeholder={placeholder}
+        type={type}
+        name={name}
+      />
     </div>
   );
 };

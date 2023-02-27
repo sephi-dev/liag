@@ -2,6 +2,7 @@ interface Props {
   name: string;
   type?: "button" | "submit" | "reset" | undefined;
   className: string;
+  onClick?: () => void;
 }
 
 export const PrimaryButton = ({ className, name, type }: Props) => {
@@ -14,9 +15,9 @@ export const PrimaryButton = ({ className, name, type }: Props) => {
   );
 };
 
-export const SecondaryButton = ({ className, name, type }: Props) => {
+export const SecondaryButton = ({ className, name, type, onClick }: Props) => {
   return (
-    <button className={`${className}`} type={type}>
+    <button onClick={onClick} className={`${className}`} type={type}>
       {name}
     </button>
   );

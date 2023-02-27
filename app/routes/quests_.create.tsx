@@ -1,5 +1,6 @@
 import { Form } from "@remix-run/react";
-import type { ActionArgs } from "@remix-run/node";
+import type { ActionArgs, ActionFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { json, useActionData } from "react-router";
 import { getUserSession } from "@/session.server";
 import { PrimaryButton, SecondaryButton } from "@/components/atoms/button";
@@ -9,22 +10,43 @@ import {
   TextAreaInputField,
 } from "@/components/molecules/input-field";
 import { SelectField } from "@/components/molecules/select-field";
+import { useState } from "react";
 
-// export const action = async ({ request }: ActionArgs) => {
-//   const userSession = await getUserSession(request);
-//   try {
-//     const formData = await request.formData();
-//     const title = formData.get("title");
-//     const description = formData.get("description");
-//     // get the rest of data form
-//   } catch (error) {
-//     console.error(error);
-//     return json({ error: "Invalid credentials" }, { status: 401 });
-//   }
-// };
+export const action: ActionFunction = async ({ request }: ActionArgs) => {
+  const userSession = await getUserSession(request);
+  if (!userSession) return redirect("/login");
+
+  const body = await request.formData();
+  const formEntries = Object.fromEntries(body.entries());
+
+  try {
+    const response = await fetch("http://localhost:3000/api/quests", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${userSession.token}`,
+      },
+      body: JSON.stringify(formEntries),
+    });
+    const data = await response.json();
+    console.log("data", data);
+    return json({ data });
+  } catch (error) {
+    console.error("---> Error on create quest", error);
+    return json({ error: "Invalid credentials" }, { status: 401 });
+  }
+};
+
+export const loader = async () => {
+  // get categories here
+  return json({ categories: ["test"] });
+};
 
 export default function CreateQuest() {
-  // const actionData = useActionData();
+  const [task, setTask] = useState("");
+  const [tasks, setSubTasks] = useState<string[]>([]);
+  const actionData = useActionData();
+
   return (
     <div>
       <h1>Create Quest</h1>
@@ -43,20 +65,32 @@ export default function CreateQuest() {
           label="Category"
           placeholder="Select a category"
         />
+        <input type="hidden" name="tasks" value={JSON.stringify(tasks)} />
         <div className="flex max-w-[360px] items-center justify-between">
           <div className="flex">
             <img src="/assets/icons/flag.svg" alt="" />
             <SecondaryInputField
               label=""
-              name="tasks"
+              name=""
               placeholder="Add new tasks"
+              onChange={(e: string) => setTask(e)}
             />
           </div>
           <SecondaryButton
             className="flex h-10 items-center text-[14px]"
             name="Add task"
-            type="submit"
+            onClick={() => {
+              setSubTasks([...tasks, task]);
+              setTask("");
+            }}
           />
+        </div>
+        <div>
+          {tasks.map((task, index) => (
+            <div key={index} className="flex items-center gap-2">
+              {task}
+            </div>
+          ))}
         </div>
         <div className="flex gap-5">
           <PrimaryInputField

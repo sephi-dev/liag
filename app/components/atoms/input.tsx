@@ -81,6 +81,7 @@ export const TextAreaInput = ({
   disabled,
 }: Props) => {
   const [height, setHeight] = useState("");
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   function handleChangeTextarea(e) {
     if (e.target.scrollHeight < 54 || e.target.value.trim() === "") {
@@ -92,11 +93,10 @@ export const TextAreaInput = ({
   }
 
   useEffect(() => {
+    if (!ref.current) return;
     const textareaForStyle = ref.current;
     textareaForStyle.style.height = `${height}px`;
   }, [height]);
-
-  const ref = useRef<HTMLTextAreaElement>(null);
 
   return (
     <textarea
