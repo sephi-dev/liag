@@ -14,7 +14,8 @@ import { json } from "@remix-run/node";
 import { useEffect } from "react";
 import { isAfter } from "date-fns";
 
-import styles from "@/glossy/global.css";
+import styles from "./glossy/global.css";
+
 import { getUserSession, logout } from "@/session.server";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
@@ -62,8 +63,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className={"bg-zinc-800 text-light"}>
-        <div className={"mx-auto w-full px-4 py-20 md:w-[740px]"}>
+      <body className="bg-[#121212] text-slate-50 ">
+        <div>
           <Outlet />
         </div>
         <ScrollRestoration />
