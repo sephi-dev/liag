@@ -1,4 +1,4 @@
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import type { ActionArgs, ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { json, useActionData } from "react-router";
@@ -18,7 +18,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
 
   const body = await request.formData();
   const formEntries = Object.fromEntries(body.entries());
-
+  const parsedTasks = JSON.parse(formEntries.tasks);
   try {
     const response = await fetch("http://localhost:3000/api/quests", {
       method: "POST",
@@ -26,10 +26,13 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
         "Content-Type": "application/json",
         Authorization: `JWT ${userSession.token}`,
       },
-      body: JSON.stringify(formEntries),
+      body: JSON.stringify({
+        ...formEntries,
+        tasks: parsedTasks,
+        category: formEntries.category,
+      }),
     });
     const data = await response.json();
-    console.log("data", data);
     return json({ data });
   } catch (error) {
     console.error("---> Error on create quest", error);
@@ -37,16 +40,35 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   }
 };
 
-export const loader = async () => {
-  // get categories here
-  return json({ categories: ["test"] });
+export const loader = async ({ request }) => {
+  const userSession = await getUserSession(request);
+  if (!userSession) return redirect("/login");
+  try {
+    const req = await fetch("http://localhost:3000/api/categories", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${userSession.token}`,
+      },
+    });
+    return json({ userSession, categories: await req.json() });
+  } catch (error) {
+    console.error(error);
+    return json({ error: "Invalid credentials" }, { status: 401 });
+  }
 };
 
 export default function CreateQuest() {
-  const [task, setTask] = useState("");
-  const [tasks, setSubTasks] = useState<string[]>([]);
-  const actionData = useActionData();
-
+  const [task, setTask] = useState<{ title: string; is_completed: boolean }>({
+    title: "",
+    is_completed: false,
+  });
+  const [tasks, setSubTasks] = useState<
+    { title: string; is_completed: boolean }[]
+  >([]);
+  const data = useActionData();
+  console.info(tasks);
+  console.info("--------->", data);
   return (
     <div>
       <h1>Create Quest</h1>
@@ -73,7 +95,9 @@ export default function CreateQuest() {
               label=""
               name=""
               placeholder="Add new tasks"
-              onChange={(e: string) => setTask(e)}
+              onChange={(e: string) =>
+                setTask({ title: e, is_completed: false })
+              }
             />
           </div>
           <SecondaryButton
@@ -81,14 +105,14 @@ export default function CreateQuest() {
             name="Add task"
             onClick={() => {
               setSubTasks([...tasks, task]);
-              setTask("");
+              setTask({ title: "", is_completed: false });
             }}
           />
         </div>
         <div>
           {tasks.map((task, index) => (
             <div key={index} className="flex items-center gap-2">
-              {task}
+              {task.title}
             </div>
           ))}
         </div>
