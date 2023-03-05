@@ -36,7 +36,7 @@ export default function _index() {
   const data = matches.find(match => match.id === "root");
   const { userSession } = data?.data || {};
   const { quests, error } = useLoaderData();
-
+  console.log(quests);
   return (
     <div>
       {userSession ? (

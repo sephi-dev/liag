@@ -5,7 +5,7 @@ interface Props {
   label: string;
   name: string;
   className?: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 export const SelectField = ({ label, name, className, placeholder }: Props) => {

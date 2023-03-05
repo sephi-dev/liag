@@ -1,7 +1,7 @@
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { Link, Form } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import { InputField } from "@/components/molecules/input-field";
+import { PrimaryInputField } from "@/components/molecules/input-field";
 import { createUserSession } from "@/session.server";
 import { CustomCheckbox } from "@/components/atoms/checkbox";
 
@@ -35,33 +35,35 @@ export default function Login() {
           LIAG
         </h1>
         <Form method={"post"} className="mx-auto flex w-[360px] flex-col gap-8">
-          <InputField
+          <PrimaryInputField
             placeholder="adress@mail.com"
             label={"Email"}
             name={"email"}
             type={"email"}
           />
-          <InputField
+          <PrimaryInputField
             placeholder="**********"
             label={"Password"}
             name={"password"}
             type={"password"}
           />
           <div className="flex gap-2">
-            <CustomCheckbox />
-            <p className="w-5/6 text-[12px] font-normal text-[#9F9F9F]">
+            <CustomCheckbox id="check-box" />
+            <label
+              htmlFor="check-box"
+              className="w-5/6 text-[12px] font-normal text-[#9F9F9F]">
               Stay connected
-            </p>
+            </label>
           </div>
           <button
-            className=" text-14 h-10 rounded bg-[#7369F1] font-semibold text-slate-50 hover:bg-[#554dc8]"
+            className=" h-10 rounded bg-[#7369F1] text-[14px] font-semibold text-slate-50 hover:bg-[#554dc8]"
             type={"submit"}>
             Connection
           </button>
         </Form>
         <div className="flex gap-1">
-          <h3 className="text-12 text-[#9F9F9F]">Forget password?</h3>
-          <Link className="text-12 text-[#7369F1]" to={"/register"}>
+          <h3 className="text-[12px] text-[#9F9F9F]">Forget password?</h3>
+          <Link className="text-[12px] text-[#7369F1]" to={"/register"}>
             Click here
           </Link>
         </div>

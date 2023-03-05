@@ -63,7 +63,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-[#121212] text-slate-50 ">
+      <body className="bg-[#121212] text-slate-50 font-inter ">
         <div>
           <Outlet />
         </div>
