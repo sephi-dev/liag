@@ -2,13 +2,7 @@ import { getQuestById } from "@/api/get-quest";
 import { PrimaryButton } from "@/components/atoms/button";
 import { CustomCheckbox } from "@/components/atoms/checkbox";
 import { getUserSession } from "@/session.server";
-import {
-  Form,
-  useActionData,
-  useFetcher,
-  useLoaderData,
-  useSubmit,
-} from "@remix-run/react";
+import { Form, useLoaderData, useSubmit } from "@remix-run/react";
 import type { ActionArgs, LoaderArgs } from "@remix-run/server-runtime";
 import { redirect } from "@remix-run/server-runtime";
 import { json } from "react-router";
@@ -26,21 +20,19 @@ export const action = async ({ request, params }: ActionArgs) => {
 
   const body = await request.formData();
   const formEntries = Object.fromEntries(body.entries());
-  console.log("----->", body);
-  return json({ data: formEntries });
+  console.log("------------> FORM DATA BODY TAVU ", formEntries);
   // try {
   //   const response = await fetch(
   //     `http://localhost:3000/api/quests/${params.questId}`,
   //     {
-  //       method: "POST",
+  //       method: "PUT",
   //       headers: {
   //         "Content-Type": "application/json",
   //         Authorization: `JWT ${userSession.token}`,
   //       },
   //       body: JSON.stringify({
-  //         ...formEntries,
-  //         tasks: parsedTasks,
-  //         category: formEntries.category,
+  //         tasks: {
+  //         },
   //       }),
   //     },
   //   );
@@ -50,12 +42,12 @@ export const action = async ({ request, params }: ActionArgs) => {
   //   console.error("---> Error on create quest", error);
   //   return json({ error: "Invalid credentials" }, { status: 401 });
   // }
+
+  return json({ status: "ok" });
 };
 
 export default function Quest() {
   const data = useLoaderData<typeof loader>();
-  const actionData = useActionData();
-  console.log("----->", actionData);
   const submit = useSubmit();
   const handleChange = e => {
     submit(e.currentTarget, { replace: true });
@@ -78,16 +70,18 @@ export default function Quest() {
             Objectifs
           </h3>
           <div className="flex w-[80%] flex-col gap-2 text-[14px]">
-            {data.tasks.map(
+            {data?.tasks.map(
               (task: { id: string; title: string; completed: boolean }) => (
                 <Form
                   onChange={handleChange}
                   method="post"
                   className="flex items-center gap-[10px]"
                   key={task.id}>
+                  <input type="hidden" name={task.id} value="false" />
                   <CustomCheckbox
+                    checked={task.completed.toString()}
                     name={task.id}
-                    id={`box${task.title}`}></CustomCheckbox>
+                  />
                   <label
                     className="cursor-pointer"
                     htmlFor={`box${task.title}`}>
