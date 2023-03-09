@@ -55,7 +55,16 @@ export default function Quests() {
   return (
     <div className="flex h-screen">
       <div className="h-full w-[256px] bg-[#171717]"></div>
-      <DefaultPageLayout title="Quests">
+      <DefaultPageLayout
+        title="Quests"
+        buttonChildren={
+          <Link
+            to={`/quests/create`}
+            className="flex items-center gap-[6px] rounded border border-[#363636] p-[10px] text-[12px] font-semibold text-[#7369F1] hover:bg-[#1f1f1f]">
+            <img src="/assets/icons/plus.svg" alt="plus icon" />
+            CREATE NEW
+          </Link>
+        }>
         <div className="flex h-full max-w-[1024px] rounded border border-[#363636]">
           {userSession ? (
             <nav className="w-[30%] border-r-[1px] border-[#363636]">
